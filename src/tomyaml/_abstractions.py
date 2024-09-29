@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, Optional, Union
+from typing import Any, Callable, Dict, Literal, Optional, Union
 
 
 class FormatAbstraction(ABC):
@@ -12,7 +12,7 @@ class FormatAbstraction(ABC):
 
     def __init__(
             self,
-            file_format: str,
+            file_format: Literal['json', 'yaml', 'toml', 'ini'],
             load_func: Callable[[Union[str, bytes]], Dict[str, Any]],
             dump_func: Callable[[Dict[str, Any]], Union[str, bytes]],
     ):
