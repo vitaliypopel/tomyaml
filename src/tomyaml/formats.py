@@ -1,10 +1,14 @@
-from typing import Union, Optional, Hashable, Any
+from typing import Any, Dict, Hashable, Optional, Union
+
+import json
+import yaml
+import toml
 
 from ._abstractions import FormatAbstraction
 
 
 class Format(FormatAbstraction):
-    def load(self, string: Union[str, bytes]) -> Optional[dict[Hashable, Any]]:
+    def load(self, string: Union[str, bytes]) -> Optional[Dict[Hashable, Any]]:
         if isinstance(string, bytes):
             string = string.decode('utf-8')
 
@@ -19,7 +23,7 @@ class Format(FormatAbstraction):
 
         return self.__dictionary
 
-    def dump(self, dictionary: dict[Hashable, Any]) -> Optional[str]:
+    def dump(self, dictionary: Dict[Hashable, Any]) -> Optional[str]:
         string = self.dump_func(dictionary)
 
         if isinstance(self.string, bytes):
@@ -27,7 +31,7 @@ class Format(FormatAbstraction):
 
         return self.__string
 
-    def to_dict(self) -> dict[Hashable, Any]:
+    def to_dict(self) -> Dict[Hashable, Any]:
         return self.__dictionary
 
     def __str__(self) -> str:
