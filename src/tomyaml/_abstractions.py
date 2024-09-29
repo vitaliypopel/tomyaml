@@ -1,20 +1,20 @@
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, Hashable, Optional, Union
+from typing import Any, Callable, Dict, Optional, Union
 
 
 class FormatAbstraction(ABC):
     __file_format: str
-    __load_func: Callable[[Union[str, bytes]], Dict[Hashable, Any]]
-    __dump_func: Callable[[Dict[Hashable, Any]], Union[str, bytes]]
+    __load_func: Callable[[Union[str, bytes]], Dict[str, Any]]
+    __dump_func: Callable[[Dict[str, Any]], Union[str, bytes]]
 
-    __dictionary: Optional[Dict[Hashable, Any]]
+    __dictionary: Optional[Dict[str, Any]]
     __string: Optional[str]
 
     def __init__(
             self,
             file_format: str,
-            load_func: Callable[[Union[str, bytes]], Dict[Hashable, Any]],
-            dump_func: Callable[[Dict[Hashable, Any]], Union[str, bytes]],
+            load_func: Callable[[Union[str, bytes]], Dict[str, Any]],
+            dump_func: Callable[[Dict[str, Any]], Union[str, bytes]],
     ):
         self.__file_format = file_format
         self.__load_func = load_func
@@ -28,15 +28,15 @@ class FormatAbstraction(ABC):
         return self.__file_format
 
     @property
-    def load_func(self) -> Callable[[Union[str, bytes]], Dict[Hashable, Any]]:
+    def load_func(self) -> Callable[[Union[str, bytes]], Dict[str, Any]]:
         return self.__load_func
 
     @property
-    def dump_func(self) -> Callable[[Dict[Hashable, Any]], Union[str, bytes]]:
+    def dump_func(self) -> Callable[[Dict[str, Any]], Union[str, bytes]]:
         return self.__dump_func
 
     @property
-    def dictionary(self) -> Dict[Hashable, Any]:
+    def dictionary(self) -> Dict[str, Any]:
         return self.__dictionary
 
     @property
@@ -44,17 +44,17 @@ class FormatAbstraction(ABC):
         return self.__string
 
     @abstractmethod
-    def load(self, string: Union[str, bytes]) -> Optional[Dict[Hashable, Any]]:
+    def load(self, string: Union[str, bytes]) -> Optional[Dict[str, Any]]:
         '''Loads a string or bytes into a dictionary'''
         pass
 
     @abstractmethod
-    def dump(self, dictionary: Dict[Hashable, Any]) -> Optional[str]:
+    def dump(self, dictionary: Dict[str, Any]) -> Optional[str]:
         '''Dumps a dictionary into a string'''
         pass
 
     @abstractmethod
-    def to_dict(self) -> Dict[Hashable, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         '''Converts the current object to a dictionary'''
         pass
 
