@@ -3,6 +3,7 @@ from typing import Any, Dict, Optional, Union
 import json
 import yaml
 import toml
+import ini
 
 from ._abstractions import FormatAbstraction
 
@@ -39,3 +40,39 @@ class Format(FormatAbstraction):
 
     def __repr__(self) -> str:
         return str(self)
+
+
+class JSONFormat(Format):
+    def __init__(self):
+        super().__init__(
+            file_format='json',
+            load_func=json.loads,
+            dump_func=json.dumps,
+        )
+
+
+class YAMLFormat(Format):
+    def __init__(self):
+        super().__init__(
+            file_format='yaml',
+            load_func=yaml.safe_load,
+            dump_func=yaml.safe_dump,
+        )
+
+
+class TOMLFormat(Format):
+    def __init__(self):
+        super().__init__(
+            file_format='toml',
+            load_func=toml.loads,
+            dump_func=toml.dumps,
+        )
+
+
+class INIFormat(Format):
+    def __init__(self):
+        super().__init__(
+            file_format='ini',
+            load_func=ini.loads,
+            dump_func=ini.dumps,
+        )
