@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional, Union
 import json
 import yaml
 import toml
-import ini
+from . import ini
 
 from ._abstractions import FormatAbstraction
 
@@ -16,27 +16,27 @@ class Format(FormatAbstraction):
         if not string and self.file_format == 'json':
             string = '{}'
 
-        self.__string = string
-        self.__dictionary = self.load_func(self.__string)
+        self._string = string
+        self._dictionary = self.load_func(self._string)
 
-        if not self.__dictionary:
-            self.__dictionary = {}
+        if not self._dictionary:
+            self._dictionary = {}
 
-        return self.__dictionary
+        return self._dictionary
 
     def dump(self, dictionary: Dict[str, Any]) -> Optional[str]:
         string = self.dump_func(dictionary)
 
         if isinstance(self.string, bytes):
-            self.__string = string.decode('utf-8')
+            self._string = string.decode('utf-8')
 
-        return self.__string
+        return self._string
 
     def to_dict(self) -> Dict[str, Any]:
-        return self.__dictionary
+        return self._dictionary
 
     def __str__(self) -> str:
-        return self.__string
+        return self._string
 
     def __repr__(self) -> str:
         return str(self)
