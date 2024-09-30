@@ -1,4 +1,4 @@
-from typing import Union, Optional, Dict, Any
+from typing import Any, Dict, Optional, Union
 
 from _abstractions import SerializerAbstraction
 
