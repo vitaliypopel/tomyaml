@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, Callable, Dict, Literal, Optional, Union
 
-from formats import (
+from .formats import (
     Format,
     JSONFormat,
     YAMLFormat,
