@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional, Union
 
-from ._abstractions import SerializerAbstraction
+from ._abstractions.serializer import SerializerAbstraction
 
 
 class Serializer(SerializerAbstraction):

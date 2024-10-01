@@ -5,7 +5,7 @@ import yaml
 import toml
 from . import ini
 
-from ._abstractions import FormatAbstraction
+from ._abstractions.format import FormatAbstraction
 
 
 class Format(FormatAbstraction):
