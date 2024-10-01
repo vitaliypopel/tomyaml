@@ -76,3 +76,11 @@ class INIFormat(Format):
             load_func=ini.loads,
             dump_func=ini.dumps,
         )
+
+
+formats = {
+    'json': JSONFormat,
+    'yaml': YAMLFormat,
+    'toml': TOMLFormat,
+    'ini': INIFormat,
+}

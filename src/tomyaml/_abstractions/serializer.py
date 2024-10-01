@@ -3,10 +3,7 @@ from typing import Any, Dict, Literal, Optional, Union
 
 from ..formats import (
     Format,
-    JSONFormat,
-    YAMLFormat,
-    TOMLFormat,
-    INIFormat,
+    formats,
 )
 
 
@@ -17,17 +14,9 @@ class SerializerAbstraction(ABC):
             self,
             file_format: Literal['json', 'yaml', 'toml', 'ini'],
     ):
-        file_format = file_format.lower()
+        self._file_format = formats.get(file_format.lower(), None)
 
-        if file_format == 'json':
-            self._file_format = JSONFormat()
-        elif file_format == 'yaml':
-            self._file_format = YAMLFormat()
-        elif file_format == 'toml':
-            self._file_format = TOMLFormat()
-        elif file_format == 'ini':
-            self._file_format = INIFormat()
-        else:
+        if not self._file_format:
             raise ValueError(
                 'Expected "json", "yaml", "toml" or "ini" file format, '
                 'instead got "%s"' % file_format.lower()
