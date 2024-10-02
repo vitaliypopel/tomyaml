@@ -14,7 +14,7 @@ class SerializerAbstraction(ABC):
             self,
             file_format: Literal['json', 'yaml', 'toml', 'ini'],
     ):
-        self._file_format = formats.get(file_format.lower(), None)
+        self._file_format = formats.get(file_format.lower(), None)()
 
         if not self._file_format:
             raise ValueError(
