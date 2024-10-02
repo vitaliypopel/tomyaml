@@ -25,7 +25,8 @@ class Format(FormatAbstraction):
         return self._dictionary
 
     def dump(self, dictionary: Dict[str, Any]) -> Optional[str]:
-        self._string = self.dump_func(dictionary)
+        self._dictionary = dictionary
+        self._string = self.dump_func(self._dictionary)
 
         if isinstance(self._string, bytes):
             self._string = self._string.decode('utf-8')
