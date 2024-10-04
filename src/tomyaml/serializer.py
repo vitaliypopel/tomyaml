@@ -10,11 +10,8 @@ class Serializer(SerializerAbstraction):
     def dump(self, dictionary: Dict[str, Any]) -> Optional[str]:
         return self._file_format.dump(dictionary)
 
-    def to_dict(self) -> Dict[str, Any]:
-        ...
-
     def __str__(self) -> str:
-        ...
+        return 'Serializer(file_format="%s")' % self._file_format.file_format
 
     def __repr__(self) -> str:
-        ...
+        return str(self)

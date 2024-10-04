@@ -37,11 +37,6 @@ class SerializerAbstraction(ABC):
         pass
 
     @abstractmethod
-    def to_dict(self) -> Dict[str, Any]:
-        '''Converts the current object to a dictionary'''
-        pass
-
-    @abstractmethod
     def __str__(self) -> str:
         '''String representation of the object'''
         pass
