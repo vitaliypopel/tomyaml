@@ -38,3 +38,13 @@ class FormatAbstraction(ABC):
     def dump(self, dictionary: Dict[str, Any]) -> Optional[str]:
         '''Dumps a dictionary into a string'''
         pass
+
+    @abstractmethod
+    def __str__(self) -> str:
+        '''String representation of the object'''
+        pass
+
+    @abstractmethod
+    def __repr__(self) -> str:
+        '''Representation of the object for debugging'''
+        pass

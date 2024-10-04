@@ -31,6 +31,12 @@ class Format(FormatAbstraction):
 
         return string
 
+    def __str__(self) -> str:
+        return 'Format("%s")' % self._file_format
+
+    def __repr__(self) -> str:
+        return str(self)
+
 
 class JSONFormat(Format):
     def __init__(self):
