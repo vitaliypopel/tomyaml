@@ -14,13 +14,15 @@ class SerializerAbstraction(ABC):
             self,
             file_format: Literal['json', 'yaml', 'toml', 'ini'],
     ):
-        self._file_format = formats.get(file_format.lower(), None)()
+        FormatClass = formats.get(file_format.lower(), None)
 
-        if not self._file_format:
+        if not FormatClass:
             raise ValueError(
                 'Expected "json", "yaml", "toml" or "ini" file format, '
                 'instead got "%s"' % file_format.lower()
             )
+
+        self._file_format = FormatClass()
 
     @property
     def file_format(self) -> Format:
