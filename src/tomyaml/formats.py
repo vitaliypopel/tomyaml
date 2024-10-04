@@ -16,31 +16,20 @@ class Format(FormatAbstraction):
         if not string and self.file_format == 'json':
             string = '{}'
 
-        self._string = string
-        self._dictionary = self.load_func(self._string)
+        dictionary = self.load_func(string)
 
-        if not self._dictionary:
-            self._dictionary = {}
+        if not dictionary:
+            dictionary = {}
 
-        return self._dictionary
+        return dictionary
 
     def dump(self, dictionary: Dict[str, Any]) -> Optional[str]:
-        self._dictionary = dictionary
-        self._string = self.dump_func(self._dictionary)
+        string = self.dump_func(dictionary)
 
-        if isinstance(self._string, bytes):
-            self._string = self._string.decode('utf-8')
+        if isinstance(string, bytes):
+            string = string.decode('utf-8')
 
-        return self._string
-
-    def to_dict(self) -> Dict[str, Any]:
-        return self._dictionary
-
-    def __str__(self) -> str:
-        return self._string
-
-    def __repr__(self) -> str:
-        return str(self)
+        return string
 
 
 class JSONFormat(Format):
