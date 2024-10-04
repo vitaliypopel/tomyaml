@@ -1,7 +1,32 @@
 import configparser
 from io import StringIO
+from multiprocessing.managers import Value
 
 from typing import Any, Dict, Union
+
+
+def _convert_value(value: str) -> Any:
+    '''
+    Converting values to Python types
+    :param value: str
+    :return: Any
+    '''
+
+    if value == 'true':
+        value = True
+    elif value == 'false':
+        value = False
+    elif ',' in value:
+        value = value.split(',')
+    else:
+        try:
+            if '.' in value:
+                value = float(value)
+            value = int(value)
+        except ValueError:
+            pass
+
+    return value
 
 
 def loads(string: Union[str, bytes]) -> Dict[str, Any]:
@@ -16,10 +41,21 @@ def loads(string: Union[str, bytes]) -> Dict[str, Any]:
     config = configparser.ConfigParser()
     config.read_string(string)
 
-    return {
-        section: dict(config.items(section))
-        for section in config.sections()
-    }
+    dictionary = {}
+
+    if config.sections():
+        for section in config.sections():
+            dictionary[section] = {}
+
+            for key, value in config.items(section):
+                dictionary[section][key] = _convert_value(value)
+    else:
+        dictionary = dict(config.defaults())
+
+        for key, value in dictionary.items():
+            dictionary[key] = _convert_value(value)
+
+    return dictionary
 
 
 def dumps(dictionary: Dict[str, Any]) -> str:
@@ -35,10 +71,10 @@ def dumps(dictionary: Dict[str, Any]) -> str:
             config[section] = {}
 
             for key, value in params.items():
-
                 if isinstance(value, list):
-                    for i, item in enumerate(value):
-                        config[section]['%s[%d]' % (item, i)] = item
+                    config[section][key] = ','.join(value)
+                elif isinstance(value, bool):
+                    config[section][key] = str(value).lower()
                 else:
                     config[section][key] = str(value)
 
@@ -46,9 +82,9 @@ def dumps(dictionary: Dict[str, Any]) -> str:
             key, value = section, params
 
             if isinstance(value, list):
-                for i, item in enumerate(value):
-                    config['DEFAULT']['%s[%d]' % (item, i)] = item
-
+                config['DEFAULT'][key] = ','.join(value)
+            elif isinstance(value, bool):
+                config['DEFAULT'][key] = str(value).lower()
             else:
                 config['DEFAULT'][key] = str(value)
 
