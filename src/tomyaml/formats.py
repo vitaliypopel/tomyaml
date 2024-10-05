@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional, Union
 import json
 import yaml
 import toml
-from . import ini
+from .utils import ini
 
 from ._abstractions.format import FormatAbstraction
 
